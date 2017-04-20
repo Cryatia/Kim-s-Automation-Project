@@ -1,11 +1,6 @@
 package automationFramework;
 
-import javax.lang.model.element.Element;
-
-import org.junit.Assert;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -27,6 +22,9 @@ public class FirstTestCases {
 		// Open Website in Chrome
 		driver.get("http://demoqa.com/registration/");
 		
+		//Maximize Browser Window
+		driver.manage().window().maximize();
+		
 		// Enter First Name
 		driver.findElement(By.name("first_name")).sendKeys("Kim");
 		
@@ -34,11 +32,25 @@ public class FirstTestCases {
 		driver.findElement(By.name("last_name")).sendKeys("Mayberry");
 
 		//Select Marital Status
-		driver.findElement(By.xpath("//input[@value='married']")).click();
-
-		//Select Hobby
-		driver.findElement(By.xpath("//input[@value='dance']")).click();
-		
+		 //driver.findElement(By.xpath("//input[@value='married']")).click();
+     List<WebElement> radiobutton = driver.findElements(By.name("radio_4[]"));
+     int iSize = radiobutton.size();
+     for(int i=0; i < iSize ; i++ ){
+      String sValue = radiobutton.get(i).getAttribute("value");
+      	 if (sValue.equalsIgnoreCase("married")){
+     		 radiobutton.get(i).click();
+      		 break;
+      	 }}
+      		 //Select Hobby
+		//driver.findElement(By.xpath("//input[@value='dance']")).click();
+     List<WebElement> checkbox = driver.findElements(By.name("checkbox_5[]"));
+     iSize = checkbox.size();
+     for(int i=0; i < iSize ; i++ ){
+      String sValue = checkbox.get(i).getAttribute("value");
+      	 if (sValue.equalsIgnoreCase("cricket ")){
+     		 checkbox.get(i).click();
+      		 break;
+      	 }}
 		
 		//Select Country
 		WebElement selectcountry = driver.findElement(By.id("dropdown_7"));
@@ -58,13 +70,13 @@ public class FirstTestCases {
 		 
 		 
 		//Enter Phone Number
-		driver.findElement(By.name("phone_9")).sendKeys("9122371137");
+		driver.findElement(By.name("phone_9")).sendKeys("9122371138");
 				
 		//Enter Username
-		driver.findElement(By.name("username")).sendKeys("cry");
+		driver.findElement(By.name("username")).sendKeys("yes1245");
 				
 		//Enter Email
-		driver.findElement(By.name("e_mail")).sendKeys("artbykimanne@gmail.com");
+		driver.findElement(By.name("e_mail")).sendKeys("yes21233@gmail.com");
 				
 		//Enter About Yourself Info
 		driver.findElement(By.name("description")).sendKeys("I love Art. I Love to Paint.");
@@ -77,22 +89,29 @@ public class FirstTestCases {
 		
 		//Click Submit to submit the form
 		driver.findElement(By.name("pie_submit")).click();
+		// use this one below to be able to resubmit but you do not get the Thank you or the username or email message
+		//driver.findElement(By.name("pie_submit")).submit();
 	
-	
-		//Checks the title is correct
-		driver.navigate().to("http://demoqa.com/registration/");
-
-		  Assert.assertEquals("Registration | Demoqa", driver.getTitle());	 
-		 System.out.print("\n asserttrue2 - > Executed - means assertion is pass");
-	
-			
 		//Check that Last name is entered
-		 driver.getPageSource().contains("Mayberry");
-		 System.out.print("Mayberry is present in the page");
-		  
-	
-	
-	
+        if(driver.getPageSource().contains("Mayberry"))
+                System.out.println("Mayberry is Present");
+               else
+              System.out.println("Mayberry is not Present");
+        
+        //Check Phone number is correct (I purposely entered the last number incorrectly to check it was working correctly.
+        if(driver.getPageSource().contains("9122371137"))
+            System.out.println("9122371137 is correct");
+           else
+          System.out.println("9122371137 is not correct");
+		
+       if(driver.getPageSource().contains("Thank you for your registration"))
+           System.out.println("Thank you for your registration is showing up after submitting form");
+           else
+           System.out.println("Thank you for your registration is not showing up after submitting form");
+      
+           
+       
+      
 	}
 	
 
